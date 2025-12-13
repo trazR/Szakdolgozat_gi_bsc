@@ -1,0 +1,81 @@
+team_name,stadium_name,stadium_address,stadium_capacity,player_name,age,gender,nationality,position
+Tolna,Tolna Aréna,7100 Tolna,2500,Tibor,20,M,HUN,Védő
+Tolna,Tolna Aréna,7100 Tolna,2500,Attila,23,M,HUN,Csatár
+Tolna,Tolna Aréna,7100 Tolna,2500,Márk,22,M,HUN,Középpályás
+Tolna,Tolna Aréna,7100 Tolna,2500,Peti,19,M,HUN,Védő
+Tolna,Tolna Aréna,7100 Tolna,2500,Ákos,21,M,HUN,Csatár
+Tolna,Tolna Aréna,7100 Tolna,2500,Zoli,24,M,HUN,Középpályás
+Tolna,Tolna Aréna,7100 Tolna,2500,Gergő,20,M,HUN,Védő
+Tolna,Tolna Aréna,7100 Tolna,2500,Sanyi,23,M,HUN,Kapus
+Tolna,Tolna Aréna,7100 Tolna,2500,Balázs,22,M,HUN,Középpályás
+Tolna,Tolna Aréna,7100 Tolna,2500,Milán,19,M,HUN,Védő
+Fadd,Fadd Stadion,7133 Fadd,1200,Dani,20,M,HUN,Csatár
+Fadd,Fadd Stadion,7133 Fadd,1200,Gábor,25,M,HUN,Védő
+Fadd,Fadd Stadion,7133 Fadd,1200,Boti,23,M,HUN,Középpályás
+Fadd,Fadd Stadion,7133 Fadd,1200,Erik,21,M,HUN,Védő
+Fadd,Fadd Stadion,7133 Fadd,1200,Laci,22,M,HUN,Csatár
+Fadd,Fadd Stadion,7133 Fadd,1200,Feri,24,M,HUN,Középpályás
+Fadd,Fadd Stadion,7133 Fadd,1200,Bence,20,M,HUN,Védő
+Fadd,Fadd Stadion,7133 Fadd,1200,Roli,26,M,HUN,Kapus
+Fadd,Fadd Stadion,7133 Fadd,1200,Ádám,21,M,HUN,Középpályás
+Fadd,Fadd Stadion,7133 Fadd,1200,Kristóf,22,M,HUN,Védő
+Szekszard,Szekszárd Városi Stadion,7100 Szekszárd,5000,Zsófi,20,F,HUN,Csatár
+Szekszard,Szekszárd Városi Stadion,7100 Szekszárd,5000,Petra,25,F,HUN,Védő
+Szekszard,Szekszárd Városi Stadion,7100 Szekszárd,5000,Bogi,23,F,HUN,Középpályás
+Szekszard,Szekszárd Városi Stadion,7100 Szekszárd,5000,Anikó,21,F,HUN,Védő
+Szekszard,Szekszárd Városi Stadion,7100 Szekszárd,5000,Lilla,22,F,HUN,Csatár
+Szekszard,Szekszárd Városi Stadion,7100 Szekszárd,5000,Noémi,24,F,HUN,Középpályás
+Szekszard,Szekszárd Városi Stadion,7100 Szekszárd,5000,Fanni,20,F,HUN,Védő
+Szekszard,Szekszárd Városi Stadion,7100 Szekszárd,5000,Gabi,26,F,HUN,Kapus
+Szekszard,Szekszárd Városi Stadion,7100 Szekszárd,5000,Erika,21,F,HUN,Középpályás
+Szekszard,Szekszárd Városi Stadion,7100 Szekszárd,5000,Anna,22,F,HUN,Védő
+Paks,Paksi Stadion,7030 Paks,4500,Ferenc,20,M,HUN,Csatár
+Paks,Paksi Stadion,7030 Paks,4500,Tamás,23,M,HUN,Védő
+Paks,Paksi Stadion,7030 Paks,4500,Misi,22,M,HUN,Középpályás
+Paks,Paksi Stadion,7030 Paks,4500,Richárd,19,M,HUN,Védő
+Paks,Paksi Stadion,7030 Paks,4500,András,21,M,HUN,Csatár
+Paks,Paksi Stadion,7030 Paks,4500,Áron,24,M,HUN,Középpályás
+Paks,Paksi Stadion,7030 Paks,4500,Szilárd,20,M,HUN,Védő
+Paks,Paksi Stadion,7030 Paks,4500,János,23,M,HUN,Kapus
+Paks,Paksi Stadion,7030 Paks,4500,Levente,22,M,HUN,Középpályás
+Paks,Paksi Stadion,7030 Paks,4500,Barnabás,19,M,HUN,Védő
+Dombovar,Dombóvári Sportpálya,7200 Dombóvár,1100,Alíz,20,F,HUN,Csatár
+Dombovar,Dombóvári Sportpálya,7200 Dombóvár,1100,Niki,23,F,HUN,Védő
+Dombovar,Dombóvári Sportpálya,7200 Dombóvár,1100,Mira,22,F,HUN,Középpályás
+Dombovar,Dombóvári Sportpálya,7200 Dombóvár,1100,Petra,19,F,HUN,Védő
+Dombovar,Dombóvári Sportpálya,7200 Dombóvár,1100,Szandra,21,F,HUN,Csatár
+Dombovar,Dombóvári Sportpálya,7200 Dombóvár,1100,Dóri,24,F,HUN,Középpályás
+Dombovar,Dombóvári Sportpálya,7200 Dombóvár,1100,Bettina,20,F,HUN,Védő
+Dombovar,Dombóvári Sportpálya,7200 Dombóvár,1100,Veronika,23,F,HUN,Kapus
+Dombovar,Dombóvári Sportpálya,7200 Dombóvár,1100,Regina,22,F,HUN,Középpályás
+Dombovar,Dombóvári Sportpálya,7200 Dombóvár,1100,Eszter,19,F,HUN,Védő
+Bonyhad,Bonyhádi Stadion,7150 Bonyhád,1700,Imre,21,M,HUN,Védő
+Bonyhad,Bonyhádi Stadion,7150 Bonyhád,1700,Dávid,22,M,HUN,Középpályás
+Bonyhad,Bonyhádi Stadion,7150 Bonyhád,1700,László,25,M,HUN,Csatár
+Bonyhad,Bonyhádi Stadion,7150 Bonyhád,1700,Krisztián,26,M,HUN,Kapus
+Bonyhad,Bonyhádi Stadion,7150 Bonyhád,1700,Ádám,22,M,HUN,Védő
+Bonyhad,Bonyhádi Stadion,7150 Bonyhád,1700,Matyi,24,M,HUN,Középpályás
+Bonyhad,Bonyhádi Stadion,7150 Bonyhád,1700,Vince,21,M,HUN,Csatár
+Bonyhad,Bonyhádi Stadion,7150 Bonyhád,1700,Kristóf,19,M,HUN,Védő
+Bonyhad,Bonyhádi Stadion,7150 Bonyhád,1700,Márton,21,M,HUN,Középpályás
+Bonyhad,Bonyhádi Stadion,7150 Bonyhád,1700,Patrik,20,M,HUN,Védő
+Tamasi,Tamási Stadion,7090 Tamási,1900,Emese,20,F,HUN,Csatár
+Tamasi,Tamási Stadion,7090 Tamási,1900,Zita,23,F,HUN,Védő
+Tamasi,Tamási Stadion,7090 Tamási,1900,Blanka,22,F,HUN,Középpályás
+Tamasi,Tamási Stadion,7090 Tamási,1900,Nóra,19,F,HUN,Védő
+Tamasi,Tamási Stadion,7090 Tamási,1900,Kinga,21,F,HUN,Csatár
+Tamasi,Tamási Stadion,7090 Tamási,1900,Orsi,24,F,HUN,Középpályás
+Tamasi,Tamási Stadion,7090 Tamási,1900,Eszti,20,F,HUN,Védő
+Tamasi,Tamási Stadion,7090 Tamási,1900,Lili,23,F,HUN,Kapus
+Tamasi,Tamási Stadion,7090 Tamási,1900,Hanna,22,F,HUN,Középpályás
+Tamasi,Tamási Stadion,7090 Tamási,1900,Sára,19,F,HUN,Védő
+Dunafoldvar,Dunaföldvári Stadion,7020 Dunaföldvár,1600,Attila,20,M,HUN,Csatár
+Dunafoldvar,Dunaföldvári Stadion,7020 Dunaföldvár,1600,Bálint,23,M,HUN,Védő
+Dunafoldvar,Dunaföldvári Stadion,7020 Dunaföldvár,1600,Zsombor,22,M,HUN,Középpályás
+Dunafoldvar,Dunaföldvári Stadion,7020 Dunaföldvár,1600,Gergely,19,M,HUN,Védő
+Dunafoldvar,Dunaföldvári Stadion,7020 Dunaföldvár,1600,Ábel,21,M,HUN,Csatár
+Dunafoldvar,Dunaföldvári Stadion,7020 Dunaföldvár,1600,Barnabás,24,M,HUN,Középpályás
+Dunafoldvar,Dunaföldvári Stadion,7020 Dunaföldvár,1600,Miklós,20,M,HUN,Védő
+Dunafoldvar,Dunaföldvári Stadion,7020 Dunaföldvár,1600,Lehel,23,M,HUN,Kapus
+Dunafoldvar,Dunaföldvári Stadion,7020 Dunaföldvár,1600,Zsolt,22,M,HUN,Középpályás
+Dunafoldvar,Dunaföldvári Stadion,7020 Dunaföldvár,1600,Arnold,19,M,HUN,Védő

@@ -1,0 +1,171 @@
+generator client {
+  provider = "prisma-client-js"
+}
+//TODO utána nézni az új eljárásnak frissítés miatt, de még működik
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model matches {
+  match_id                  Int       @id @default(autoincrement())
+  referee_referee_id        Int?
+  tournament_tournament_id  Int
+  away_team_id              Int?
+  home_team_id              Int?
+  winner_team_id            Int?
+  stadium_stadium_id        Int?
+  match_round               Int?
+  home_team_score           Int?
+  away_team_score           Int?
+  match_status              String     @default("nem lejátszott") @db.VarChar(45)
+  manual_stadium_id         Int?
+  match_date                DateTime?
+  bracket_type              String?    @db.VarChar(45)
+  previous_match_1_id       Int?
+  previous_match_2_id       Int?
+  loser_to_match_id         Int?
+  venue       venue?     @relation(fields: [manual_stadium_id], references: [venue_id], onDelete: SetNull)
+  referee     referee?   @relation(fields: [referee_referee_id], references: [referee_id], onDelete: SetNull)
+  stadium     stadium?   @relation(fields: [stadium_stadium_id], references: [stadium_id], onDelete: SetNull)
+  tournament  tournament @relation(fields: [tournament_tournament_id], references: [tournament_id], onDelete: Cascade)
+  homeTeam    team? @relation("matches_home_team_idToteam", fields: [home_team_id], references: [team_id])
+  awayTeam    team? @relation("matches_away_team_idToteam", fields: [away_team_id], references: [team_id])
+  winnerTeam  team? @relation("matches_winner_team_idToteam", fields: [winner_team_id], references: [team_id])
+  previousMatch1     matches?  @relation("matches_previous_match_1_idTomatches", fields: [previous_match_1_id], references: [match_id])
+  nextMatchesFrom1   matches[] @relation("matches_previous_match_1_idTomatches")
+  previousMatch2     matches?  @relation("matches_previous_match_2_idTomatches", fields: [previous_match_2_id], references: [match_id])
+  nextMatchesFrom2   matches[] @relation("matches_previous_match_2_idTomatches")
+  loserToMatch       matches?  @relation("matches_loser_to_match_idTomatches", fields: [loser_to_match_id], references: [match_id])
+  loserFromMatches   matches[] @relation("matches_loser_to_match_idTomatches")
+  plays              plays[]
+}
+
+model player {
+  player_id    Int     @id @default(autoincrement())
+  player_name  String   @db.VarChar(45)
+  age          Int?
+  gender       String?  @db.VarChar(10)
+  team_team_id Int
+  nationality  String?
+  position     String?
+  team  team  @relation(fields: [team_team_id], references: [team_id], onDelete: Cascade)
+  plays plays[]
+}
+
+model plays {
+  matches_match_id    Int
+  player_player_id    Int
+  goals               Int?
+  assists             Int?
+  shots_total         Int?
+  shots_on_target     Int?
+  fouls_committed     Int?
+  yellow_cards        Int?
+  red_cards           Int?
+  penalties_taken     Int?
+  penalties_scored    Int?
+  offsides            Int?
+  total_passes        Int?
+  successful_passes   Int?
+  tackles             Int?
+  interception        Int?
+  blocks              Int?
+  corners             Int?
+  free_kick           Int?
+  throw_ins           Int?
+  goalkeeper_saves    Int?
+  points_2pt          Int?
+  points_3pt          Int?
+  free_throws         Int?
+  rebounds            Int?
+  turnovers           Int?
+  personal_fouls      Int?
+  technical_fouls     Int?
+  unsportsmanlike_fouls   Int?
+  two_min_suspensions Int?
+  matches matches @relation(fields: [matches_match_id], references: [match_id], onDelete: Cascade)
+  player  player  @relation(fields: [player_player_id], references: [player_id], onDelete: Cascade)
+  @@id([matches_match_id, player_player_id])
+}
+
+model referee {
+  referee_id               Int        @id @default(autoincrement())
+  referee_name             String     @db.VarChar(45)
+  tournament_tournament_id Int
+  age                      Int?
+  gender                   String?    @db.VarChar(10)
+  nationality              String?
+  matches    matches[]
+  tournament tournament @relation(fields: [tournament_tournament_id], references: [tournament_id], onDelete: Cascade)
+}
+
+model stadium {
+  stadium_id     Int    @id @default(autoincrement())
+  stadium_name   String @db.VarChar(45)
+  capacity       Int?
+  address        String?
+  team_team_id   Int    @unique
+  matches        matches[]
+  team           team   @relation(fields: [team_team_id], references: [team_id], onDelete: Cascade)
+}
+
+model team {
+  team_id                              Int        @id @default(autoincrement())
+  team_name                            String     @db.VarChar(45)
+  tournament_tournament_id             Int
+  matches_matches_away_team_idToteam   matches[]  @relation("matches_away_team_idToteam")
+  matches_matches_home_team_idToteam   matches[]  @relation("matches_home_team_idToteam")
+  matches_matches_winner_team_idToteam matches[]  @relation("matches_winner_team_idToteam")
+  player     player[]
+  stadium    stadium?
+  tournament tournament @relation(fields: [tournament_tournament_id], references: [tournament_id], onDelete: Cascade)
+}
+
+model tournament {
+  tournament_id          Int        @id @default(autoincrement())
+  tournament_name        String      @db.VarChar(45)
+  tournament_type        String      @db.VarChar(45)
+  participants           Int
+  status                 String?     @default("onhold") @db.VarChar(45)
+  hold_third_place_match Int?        @default(0)
+  description            String?
+  point_for_win          Int
+  round                  Int         @default(0)
+  point_for_draw         Int
+  game                   String       @db.VarChar(45)
+  user_id                String
+  tournament_start       DateTime?
+  matches   matches[]
+  referee   referee[]
+  schedule  schedule[]
+  team      team[]
+  users     users      @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  venue     venue[]
+}
+
+model users {
+  id         String       @id @default(uuid())
+  email      String       @unique
+  tournament tournament[]
+}
+
+model venue {
+  venue_id                 Int        @id @default(autoincrement())
+  venue_name               String      @db.VarChar(45)
+  address                  String?
+  capacity                 Int?
+  tournament_tournament_id Int
+  matches     matches[]
+  tournament  tournament @relation(fields: [tournament_tournament_id], references: [tournament_id], onDelete: Cascade)
+}
+
+model schedule {
+  id                       Int        @id @default(autoincrement())
+  tournament_tournament_id Int
+  day_of_week              String      @db.VarChar(10)
+  start_time               String      @db.VarChar(10)
+  end_time                 String      @db.VarChar(10)
+  match_duration           Int?
+  tournament tournament @relation(fields: [tournament_tournament_id], references: [tournament_id], onDelete: Cascade)
+}
