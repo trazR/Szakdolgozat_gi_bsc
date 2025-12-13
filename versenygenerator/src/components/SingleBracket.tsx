@@ -56,7 +56,7 @@ function CustomSeed({
             <EditMatchResults match={seed.match} endpoint="single" onSaved={refreshMatches} />
             {seed.match?.match_status === 'over' && (
               <>
-                <EditMatchStatsModal match={seed.match} />
+                <EditMatchStatsModal match={seed.match} onSaved={refreshMatches} />
                 <ExportMatchResults match={seed.match} />
               </>
             )}

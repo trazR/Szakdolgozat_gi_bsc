@@ -5,11 +5,22 @@ import EditMatchPlayerStats from "./EditMatchPlayerStats";
 import EditMatchGeneralStats from "./EditMatchGeneralStats";
 import { BarChart3 } from "lucide-react";
 
-export default function EditMatchStatsModal({ match }: { match: any }) {
+export default function EditMatchStatsModal({
+  match,
+  onSaved,
+}: {
+  match: any;
+  onSaved?: () => void;
+}) {
   const [open, setOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<"players" | "general">("players");
 
   const sport = match.tournament?.game || "football";
+
+  const closeModal = () => {
+    setOpen(false);
+    setActiveTab("players"); // opcionális: mindig az első tabbal nyisson
+  };
 
   return (
     <>
@@ -52,12 +63,16 @@ export default function EditMatchStatsModal({ match }: { match: any }) {
             </div>
 
             {activeTab === "players" ? (
-              <EditMatchPlayerStats match={match} onCancel={() => setOpen(false)} />
+              <EditMatchPlayerStats
+                match={match}
+                onCancel={closeModal}
+                onSaved={onSaved}
+              />
             ) : (
               <EditMatchGeneralStats
                 sport={sport}
                 match={match}
-                onCancel={() => setOpen(false)}
+                onCancel={closeModal}
               />
             )}
           </div>

@@ -65,7 +65,7 @@ function CustomSeed({ seed, breakpoint, referees, refreshMatches }: CustomSeedPr
             />
             {seed.match?.match_status === 'over' && (
               <>
-                <EditMatchStatsModal match={seed.match} />
+                <EditMatchStatsModal match={seed.match} onSaved={refreshMatches} />
                 <ExportMatchResults match={seed.match} />
               </>
             )}
@@ -194,7 +194,7 @@ export default function DoubleBracket({ tournamentId }: { tournamentId: number }
   useEffect(() => {
     fetch(`/api/referees?tournamentId=${tournamentId}`)
       .then((res) => res.json())
-      .then(setReferees)
+      .then((data) => setReferees(data.refereeStats ?? []))
       .catch(() => setReferees([]));
   }, [tournamentId]);
 

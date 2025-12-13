@@ -45,30 +45,49 @@ export default function AddPlayers({
   }, [teamId]);
 
   const handleAddPlayer = async () => {
-    if (!newPlayerName.trim()) {
-      toast.error('Add meg a játékos nevét!');
-      return;
-    }
-    try {
-      setLoading(true);
-      const res = await fetch('/api/players', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ player_name: newPlayerName, team_team_id: teamId }),
-      });
+  const name = newPlayerName.trim();
 
-      if (!res.ok) throw new Error('Hiba a játékos hozzáadásakor.');
+  if (!name) {
+    toast.error("Add meg a játékos nevét!");
+    return;
+  }
 
-      toast.success('Játékos sikeresen hozzáadva!');
-      setNewPlayerName('');
-      fetchPlayers();
-    } catch (err) {
-      console.error(err);
-      toast.error('Nem sikerült hozzáadni a játékost.');
-    } finally {
-      setLoading(false);
-    }
-  };
+  if (/\d/.test(name)) {
+    toast.error("A játékos neve nem tartalmazhat számot!");
+    return;
+  }
+
+  if (!/^[\p{L}\s.'-]+$/u.test(name)) {
+    toast.error("A név csak betűket és szóközöket tartalmazhat.");
+    return;
+  }
+
+  if (name.length < 3) {
+    toast.error("A játékos neve legalább 3 karakter hosszú legyen.");
+    return;
+  }
+
+  try {
+    setLoading(true);
+    const res = await fetch("/api/players", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ player_name: name, team_team_id: teamId }),
+    });
+
+    if (!res.ok) throw new Error("Hiba a játékos hozzáadásakor.");
+
+    toast.success("Játékos sikeresen hozzáadva!");
+    setNewPlayerName("");
+    fetchPlayers();
+  } catch (err) {
+    console.error(err);
+    toast.error("Nem sikerült hozzáadni a játékost.");
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   const handleDeletePlayer = async (playerId: number) => {
     try {

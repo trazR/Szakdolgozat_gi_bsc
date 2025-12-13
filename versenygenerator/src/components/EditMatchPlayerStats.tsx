@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import { statFieldsBySport } from '@/utils/statFields';
 import { toast } from 'sonner';
 
-export default function EditMatchPlayerStats({ match, onCancel }: any) {
+export default function EditMatchPlayerStats({ match, onCancel, onSaved }: any) {
   const router = useRouter();
   const sport = match.tournament?.game || 'football';
   const statFields = statFieldsBySport[sport] || statFieldsBySport.football;
@@ -64,8 +64,15 @@ export default function EditMatchPlayerStats({ match, onCancel }: any) {
       const result = await res.json();
       if (!res.ok) throw new Error(result.error || 'Mentés sikertelen');
 
-      router.refresh();
       toast.success('Játékos statisztikák sikeresen mentve!');
+
+      // 1) bracket / meccslista frissítés (ez a fontos!)
+      onSaved?.();
+
+      // 2) opcionális router refresh (ha máshol server componentből jön adat)
+      router.refresh();
+
+      // 3) modal bezárása
       onCancel();
     } catch (error) {
       toast.error('Nem sikerült menteni a játékos statisztikákat.');
@@ -124,14 +131,8 @@ export default function EditMatchPlayerStats({ match, onCancel }: any) {
   return (
     <div className="w-full max-w-[95vw] max-h-[85vh] overflow-auto p-4 bg-white rounded-lg shadow-lg">
       <div className="flex flex-col md:flex-row gap-12 overflow-x-auto pb-6">
-        {renderTeamTable(
-          homePlayers,
-          match.homeTeam.team_name
-        )}
-        {renderTeamTable(
-          awayPlayers,
-          match.awayTeam.team_name
-        )}
+        {renderTeamTable(homePlayers, match.homeTeam.team_name)}
+        {renderTeamTable(awayPlayers, match.awayTeam.team_name)}
       </div>
 
       <div className="flex justify-center gap-6 mt-8">

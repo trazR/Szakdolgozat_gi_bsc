@@ -3,12 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -26,12 +21,14 @@ const TournamentForm = () => {
   const [name, setName] = useState("");
   const [game, setGame] = useState("");
   const [type, setType] = useState("");
-  const [participants, setParticipants] = useState(2);
+
+  const [participants, setParticipants] = useState<string>("2");
+  const [pointsForWin, setPointsForWin] = useState<string>("0");
+  const [pointsForDraw, setPointsForDraw] = useState<string>("0");
+  const [rounds, setRounds] = useState<string>("1");
+
   const [description, setDescription] = useState("");
   const [hasThirdPlaceMatch, setHasThirdPlaceMatch] = useState(false);
-  const [pointsForWin, setPointsForWin] = useState(0);
-  const [pointsForDraw, setPointsForDraw] = useState(0);
-  const [rounds, setRounds] = useState(0);
 
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
@@ -51,29 +48,43 @@ const TournamentForm = () => {
       toast.error("Válaszd ki a versenytípust.");
       return;
     }
-    if (participants < 2) {
+
+    const participantsNum = Number(participants);
+    const pointsForWinNum = Number(pointsForWin);
+    const pointsForDrawNum = Number(pointsForDraw);
+    const roundsNum = Number(rounds);
+
+    if (!Number.isFinite(participantsNum) || participantsNum < 2) {
       toast.error("Legalább 2 résztvevő szükséges.");
       return;
     }
-    if ((type === "league" || type === "round-robin") && (pointsForWin < 0 || pointsForDraw < 0)) {
+
+    if (
+      (type === "league" || type === "round-robin") &&
+      ((!Number.isFinite(pointsForWinNum) || pointsForWinNum < 0) ||
+        (!Number.isFinite(pointsForDrawNum) || pointsForDrawNum < 0))
+    ) {
       toast.error("A pontszámok nem lehetnek negatívak.");
       return;
     }
-    if (type === "round-robin" && rounds < 1) {
-      toast.error("A körmérkőzéshez legalább 1 forduló szükséges.");
-      return;
+
+    if (type === "round-robin") {
+      if (!Number.isFinite(roundsNum) || roundsNum < 1) {
+        toast.error("A körmérkőzéshez legalább 1 forduló szükséges.");
+        return;
+      }
     }
 
     const formData = {
-      name,
+      name: name.trim(),
       game,
       type,
-      participants,
+      participants: participantsNum,
       description,
       hasThirdPlaceMatch,
-      pointsForWin,
-      pointsForDraw,
-      rounds,
+      pointsForWin: pointsForWinNum,
+      pointsForDraw: pointsForDrawNum,
+      rounds: roundsNum,
     };
 
     setIsLoading(true);
@@ -89,7 +100,6 @@ const TournamentForm = () => {
 
       if (!res.ok) {
         toast.error(result.error || "Hiba történt a verseny létrehozása során.");
-        setIsLoading(false);
         return;
       }
 
@@ -109,6 +119,7 @@ const TournamentForm = () => {
           <CardHeader className="mb-4">
             <CardTitle className="text-center text-3xl">Új Verseny</CardTitle>
           </CardHeader>
+
           <CardContent className="mb-4">
             <div className="mb-12">
               <Label>Verseny neve:</Label>
@@ -119,16 +130,19 @@ const TournamentForm = () => {
                 required
               />
             </div>
+
             <div className="mb-12">
               <Label>Résztvevők száma:</Label>
               <Input
-                min="2"
+                min={2}
                 type="number"
+                inputMode="numeric"
                 value={participants}
-                onChange={(e) => setParticipants(Number(e.target.value))}
+                onChange={(e) => setParticipants(e.target.value)} // ✅ nem Number()
                 required
               />
             </div>
+
             <div className="mb-12">
               <Label className="block mb-2">Sport:</Label>
               <Select value={game} onValueChange={setGame}>
@@ -144,6 +158,7 @@ const TournamentForm = () => {
                 </SelectContent>
               </Select>
             </div>
+
             <div className="mb-12">
               <Label className="block mb-2">Versenytípus:</Label>
               <Select value={type} onValueChange={setType}>
@@ -160,6 +175,7 @@ const TournamentForm = () => {
                 </SelectContent>
               </Select>
             </div>
+
             {type === "knockout" && (
               <div className="flex items-center gap-3">
                 <Input
@@ -171,42 +187,49 @@ const TournamentForm = () => {
                 <Label>Harmadik hely mérkőzés</Label>
               </div>
             )}
+
             {(type === "league" || type === "round-robin") && (
               <>
                 <div className="mb-12">
                   <Label>Pont a győzelemért:</Label>
                   <Input
-                    min="0"
+                    min={0}
                     type="number"
+                    inputMode="numeric"
                     value={pointsForWin}
-                    onChange={(e) => setPointsForWin(Number(e.target.value))}
+                    onChange={(e) => setPointsForWin(e.target.value)} // ✅
                     required
                   />
                 </div>
+
                 <div className="mb-12">
                   <Label>Pont a döntetlenért:</Label>
                   <Input
-                    min="0"
+                    min={0}
                     type="number"
+                    inputMode="numeric"
                     value={pointsForDraw}
-                    onChange={(e) => setPointsForDraw(Number(e.target.value))}
+                    onChange={(e) => setPointsForDraw(e.target.value)} // ✅
                     required
                   />
                 </div>
               </>
             )}
+
             {type === "round-robin" && (
               <div className="mb-12">
                 <Label>Fordulók száma:</Label>
                 <Input
+                  min={1}
                   type="number"
+                  inputMode="numeric"
                   value={rounds}
-                  onChange={(e) => setRounds(Number(e.target.value))}
+                  onChange={(e) => setRounds(e.target.value)} // ✅
                   required
-                  min="1"
                 />
               </div>
             )}
+
             <div className="mb-12">
               <Label>Leírás:</Label>
               <Textarea

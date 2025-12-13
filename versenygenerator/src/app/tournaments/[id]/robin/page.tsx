@@ -25,7 +25,7 @@ export default function RobinMatches({ params }: { params: { id: string } }) {
         const refData = refRes.ok ? await refRes.json() : [];
 
         setMatches(matchData);
-        setReferees(refData);
+        setReferees(refData.refereeStats ?? []);
       } catch (err) {
         console.error('Hiba az adatok betöltésekor:', err);
       } finally {

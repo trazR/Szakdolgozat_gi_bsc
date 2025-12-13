@@ -21,8 +21,8 @@ export const statFieldsBySport = {
   ],
 
   basketball: [
-    { key: "points_2pt",            label: "2 pontos dobás" },
-    { key: "points_3pt",            label: "3 pontos dobás" },
+    { key: "points_2pt",            label: "2 pontos dobás (db)" },
+    { key: "points_3pt",            label: "3 pontos dobás (db)" },
     { key: "assists",               label: "Assziszt" },
     { key: "shots_total",           label: "Dobások összesen" },
     { key: "shots_on_target",       label: "Palánkot talált" },

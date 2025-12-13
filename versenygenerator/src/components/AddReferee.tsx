@@ -42,53 +42,70 @@ export default function AddReferees({ tournamentId }: { tournamentId: number }) 
   }, []);
 
   const handleAddReferee = async () => {
-    if (!newRefereeName.trim()) {
-      toast.error("Adj meg egy nevet!");
-      return;
+  const name = newRefereeName.trim();
+
+  if (!name) {
+    toast.error("Adj meg egy nevet!");
+    return;
+  }
+
+  if (/\d/.test(name)) {
+    toast.error("A játékvezető neve nem tartalmazhat számot!");
+    return;
+  }
+
+  if (!/^[\p{L}\s.'-]+$/u.test(name)) {
+    toast.error("A név csak betűket és szóközöket tartalmazhat.");
+    return;
+  }
+
+  if (name.length < 3) {
+    toast.error("A játékvezető neve legalább 3 karakter hosszú legyen.");
+    return;
+  }
+
+  setLoading(true);
+  try {
+    const res = await fetch("/api/referees", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        referee_name: name,
+        tournament_tournament_id: tournamentId,
+      }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      throw new Error(data.error || "Nem sikerült hozzáadni.");
     }
 
-    setLoading(true);
-    try {
-      const res = await fetch("/api/referees", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          referee_name: newRefereeName.trim(),
-          tournament_tournament_id: tournamentId,
-        }),
-      });
+    toast.success("Játékvezető hozzáadva!");
+    setNewRefereeName("");
+    fetchReferees();
+  } catch (err) {
+    toast.error("Hiba a játékvezető hozzáadásánál.");
+  } finally {
+    setLoading(false);
+  }
+};
 
-      const data = await res.json();
+ const handleDeleteReferee = async (refereeId: number) => {
+  try {
+    const res = await fetch("/api/referees", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ referee_id: refereeId }),
+    });
+    if (!res.ok) throw new Error();
 
-      if (!res.ok) {
-        throw new Error(data.error || "Nem sikerült hozzáadni.");
-      }
-
-      toast.success("Játékvezető hozzáadva!");
-      setNewRefereeName("");
-      fetchReferees();
-    } catch (err) {
-      toast.error("Hiba a játékvezető hozzáadásánál.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleDeleteReferee = async (refereeId: number) => {
-    if (!confirm("Biztosan törlöd a játékvezetőt?")) return;
-    try {
-      const res = await fetch("/api/referees", {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ referee_id: refereeId }),
-      });
-      if (!res.ok) throw new Error();
-      toast.success("🗑️ Játékvezető törölve!");
-      fetchReferees();
-    } catch {
-      toast.error("Nem sikerült törölni a játékvezetőt.");
-    }
-  };
+    toast.success("Játékvezető törölve!");
+    fetchReferees();
+  } catch {
+    toast.error("Nem sikerült törölni a játékvezetőt.");
+  }
+};
 
   if (!sport) {
     return <div className="p-4 text-gray-500">Betöltés...</div>;
